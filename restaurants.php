@@ -6,40 +6,11 @@
                         Visit My Website : developerrony.com -->
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <title>Login || Code Camp BD</title>
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
-
-    <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900|RobotoDraft:400,100,300,500,700,900'>
-    <link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'>
-
-    <link rel="stylesheet" href="css/login.css">
-
-    <style type="text/css">
-    #buttn {
-        color: #fff;
-        background-color: #5c4ac7;
-    }
-    </style>
-
-    <!--  Author Name: MH RONY.
-                        GigHub Link: https://github.com/dev-mhrony
-                        Facebook Link:https://www.facebook.com/dev.mhrony
-                        Youtube Link: https://www.youtube.com/channel/UChYhUxkwDNialcxj-OFRcDw
-                        for any PHP, Laravel, Python, Dart, Flutter work contact me at developer.mhrony@gmail.com  
-                        Visit My Website : developerrony.com -->
-
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/font-awesome.min.css" rel="stylesheet">
-    <link href="css/animsition.min.css" rel="stylesheet">
-    <link href="css/animate.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
-
-</head>
+<?php
+include("connection/connect.php");
+error_reporting(0);
+session_start();
+?>
 <!--  Author Name: MH RONY.
                         GigHub Link: https://github.com/dev-mhrony
                         Facebook Link:https://www.facebook.com/dev.mhrony
@@ -47,7 +18,23 @@
                         for any PHP, Laravel, Python, Dart, Flutter work contact me at developer.mhrony@gmail.com  
                         Visit My Website : developerrony.com -->
 
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="#">
+    <title>Restaurants</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <link href="css/animsition.min.css" rel="stylesheet">
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+</head>
+
 <body>
+
     <header id="header" class="header-scroll top-header headrom">
         <nav class="navbar navbar-dark">
             <div class="container">
@@ -85,38 +72,26 @@
             </div>
         </nav>
     </header>
-    <div style=" background-image: url('images/img/pimg.jpg');">
+    <div class="page-wrapper">
+        <div class="top-links">
+            <div class="container">
+                <ul class="row links">
 
-        <?php
-include("connection/connect.php"); 
-error_reporting(0); 
-session_start(); 
-if(isset($_POST['submit']))  
-{
-	$username = $_POST['username'];  
-	$password = $_POST['password'];
-	
-	if(!empty($_POST["submit"]))   
-     {
-	$loginquery ="SELECT * FROM users WHERE username='$username' && password='".md5($password)."'"; //selecting matching records
-	$result=mysqli_query($db, $loginquery); //executing
-	$row=mysqli_fetch_array($result);
-	
-	                        if(is_array($row)) 
-								{
-                                    	$_SESSION["user_id"] = $row['u_id']; 
-										 header("refresh:1;url=index.php"); 
-	                            } 
-							else
-							    {
-                                      	$message = "Invalid Username or Password!"; 
-                                }
-	 }
-	
-	
-}
-?>
-
+                    <li class="col-xs-12 col-sm-4 link-item active"><span>1</span><a href="#">Choose Restaurant</a></li>
+                    <li class="col-xs-12 col-sm-4 link-item"><span>2</span><a href="#">Pick Your favorite food</a></li>
+                    <li class="col-xs-12 col-sm-4 link-item"><span>3</span><a href="#">Order and Pay</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="inner-page-hero bg-image" data-image-src="images/img/pimg.jpg">
+            <div class="container"> </div>
+        </div>
+        <div class="result-show">
+            <div class="container">
+                <div class="row">
+                </div>
+            </div>
+        </div>
         <!--  Author Name: MH RONY.
                         GigHub Link: https://github.com/dev-mhrony
                         Facebook Link:https://www.facebook.com/dev.mhrony
@@ -124,53 +99,81 @@ if(isset($_POST['submit']))
                         for any PHP, Laravel, Python, Dart, Flutter work contact me at developer.mhrony@gmail.com  
                         Visit My Website : developerrony.com -->
 
-        <div class="pen-title">
-            < </div>
+        <section class="restaurants-page">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-5 col-md-5 col-lg-3">
+                    </div>
+                    <div class="col-xs-12 col-sm-7 col-md-7 col-lg-9">
+                        <div class="bg-gray restaurant-entry">
+                            <div class="row">
+                                <?php $ress= mysqli_query($db,"select * from restaurant");
+									      while($rows=mysqli_fetch_array($ress))
+										  {
+													
+						
+													 echo' <div class="col-sm-12 col-md-12 col-lg-8 text-xs-center text-sm-left">
+															<div class="entry-logo">
+																<a class="img-fluid" href="dishes.php?res_id='.$rows['rs_id'].'" > <img src="admin/Res_img/'.$rows['image'].'" alt="Food logo"></a>
+															</div>
+															<!-- end:Logo -->
+															<div class="entry-dscr">
+																<h5><a href="dishes.php?res_id='.$rows['rs_id'].'" >'.$rows['title'].'</a></h5> <span>'.$rows['address'].'</span>
+																
+															</div>
+															<!-- end:Entry description -->
+														</div>
+														
+														 <div class="col-sm-12 col-md-12 col-lg-4 text-xs-center">
+																<div class="right-content bg-white">
+																	<div class="right-review">
+																		
+																		<a href="dishes.php?res_id='.$rows['rs_id'].'" class="btn btn-purple">View Menu</a> </div>
+																</div>
+																<!-- end:right info -->
+															</div>';
+										  }
+						
+						
+						?>
 
-                <div class="module form-module">
-                    <div class="toggle">
+                            </div>
+
+                        </div>
+
+
 
                     </div>
-                    <div class="form">
-                        <h2>Login to your account</h2>
-                        <span style="color:red;"><?php echo $message; ?></span>
-                        <span style="color:green;"><?php echo $success; ?></span>
-                        <form action="" method="post">
-                            <input type="text" placeholder="Username" name="username" />
-                            <input type="password" placeholder="Password" name="password" />
-                            <input type="submit" id="buttn" name="submit" value="Login" />
-                        </form>
-                    </div>
-
-                    <div class="cta">Not registered?<a href="registration.php" style="color:#5c4ac7;"> Create an account</a></div>
-                </div>
-                <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 
 
-                <!--  Author Name: MH RONY.
+                    <!--  Author Name: MH RONY.
                         GigHub Link: https://github.com/dev-mhrony
                         Facebook Link:https://www.facebook.com/dev.mhrony
                         Youtube Link: https://www.youtube.com/channel/UChYhUxkwDNialcxj-OFRcDw
                         for any PHP, Laravel, Python, Dart, Flutter work contact me at developer.mhrony@gmail.com  
                         Visit My Website : developerrony.com -->
 
-
-                <div class="container-fluid pt-3">
-                    <p></p>
                 </div>
+            </div>
+    </div>
+    </section>
 
+    <?php include "include/footer.php" ?>
 
-
-                <?php include "include/footer.php" ?>
-
-                <!--  Author Name: MH RONY.
-                        GigHub Link: https://github.com/dev-mhrony
-                        Facebook Link:https://www.facebook.com/dev.mhrony
-                        Youtube Link: https://www.youtube.com/channel/UChYhUxkwDNialcxj-OFRcDw
-                        for any PHP, Laravel, Python, Dart, Flutter work contact me at developer.mhrony@gmail.com  
-                        Visit My Website : developerrony.com -->
-
-
+    <script src="js/jquery.min.js"></script>
+    <script src="js/tether.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/animsition.min.js"></script>
+    <script src="js/bootstrap-slider.min.js"></script>
+    <script src="js/jquery.isotope.min.js"></script>
+    <script src="js/headroom.js"></script>
+    <script src="js/foodpicky.min.js"></script>
 </body>
+<!--  Author Name: MH RONY.
+                        GigHub Link: https://github.com/dev-mhrony
+                        Facebook Link:https://www.facebook.com/dev.mhrony
+                        Youtube Link: https://www.youtube.com/channel/UChYhUxkwDNialcxj-OFRcDw
+                        for any PHP, Laravel, Python, Dart, Flutter work contact me at developer.mhrony@gmail.com  
+                        Visit My Website : developerrony.com -->
 
 </html>
