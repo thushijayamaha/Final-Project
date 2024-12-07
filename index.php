@@ -64,7 +64,7 @@ session_start();
                         Youtube Link: https://www.youtube.com/channel/UChYhUxkwDNialcxj-OFRcDw
                         for any PHP, Laravel, Python, Dart, Flutter work contact me at developer.mhrony@gmail.com  
                         Visit My Website : developerrony.com -->
-
+                        
 
                         <?php
 						if(empty($_SESSION["user_id"])) // if user is not login
@@ -78,6 +78,8 @@ session_start();
 									
 									echo  '<li class="nav-item"><a href="your_orders.php" class="nav-link active">My Orders</a> </li>';
 									echo  '<li class="nav-item"><a href="logout.php" class="nav-link active">Logout</a> </li>';
+                                    echo  '<li class="nav-item"><a href="search.php" class="nav-link active">Search</a> </li>';
+
 							}
 
 						?>
@@ -142,6 +144,7 @@ session_start();
                 </div>
 
             </div>
+        
         </div>
 
     </section>
